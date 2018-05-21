@@ -114,7 +114,6 @@ h1, h2 {
   height: 100%;
   box-sizing: border-box;
   min-width: 480px;
-
   min-height: 480px;
   display: flex;
   border-style: solid;

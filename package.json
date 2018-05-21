@@ -1,6 +1,6 @@
 {
   "name": "timesheetcalc",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "A Progressive Web App for calculating start time and end time differences.",
   "author": "Jessop Breth",
   "private": true,
