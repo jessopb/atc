@@ -70,13 +70,13 @@ export default {
     bus.$on('calcKeyUp', (event) => {
 
       this.buttonStates[event.code] = false;
-      console.log(this.buttonStates[event.code])
+
 
     }),
     bus.$on('calcKeyDown', (event) => {
 
       this.buttonStates[event.code] = true;
-      console.log(this.buttonStates[event.code])
+      //console.log(this.buttonStates[event.code])
     })
   }
 }

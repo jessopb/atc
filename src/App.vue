@@ -24,9 +24,6 @@ export default {
       totalMinutes: 0,
       currentMinutes: 0,
       entered: false,
-      lastResult: '10:00 AM to 2:45 PM is 4:45',
-      logString: ''
-
     }
   },
   methods: {
@@ -42,7 +39,6 @@ export default {
       else {
         this.textinput(what)
       }
-
     },
     textinput: function(what){
       this.inputString = this.inputString + what
@@ -50,7 +46,7 @@ export default {
     },
     reset: function () {
       this.inputString = '';
-
+      this.currentMinutes = 0;
       this.entered = false;
     },
 
@@ -75,14 +71,14 @@ export default {
         }
         else {
           this.totalMinutes = this.endMinutes - this.startMinutes
+          console.log(this.totalMinutes)
         }
-        this.lastResult = this.startTime + ' to ' + this.endTime + ' is ' + this.formatTime(this.totalMinutes)
-        this.logString = this.lastResult + '\n' + this.logString
         this.reset()
 
       }
 
     },
+    // Given custom notation, return minutes from 00:00.
     parseMinutes: function (input){
 
       if (input.length == 1){
@@ -94,7 +90,14 @@ export default {
           this.currentMinutes =  60 * input.substr(0,1) + 720
         }
         else {
-          this.currentMinutes =  60 * input
+          if (input == '12')
+          {
+            this.currentMinutes = 0
+          }
+          else{
+            this.currentMinutes =  60 * input
+          }
+
         }
       }
 
@@ -114,6 +117,7 @@ export default {
         else {
           if (input.startsWith('12')){
             this.currentMinutes =  Number(input.substr(2,4))
+            console.log("curmin is " + this.currentMinutes)
           }
           else {
             this.currentMinutes =  Number(60 * input.substr(0,2)) + Number(input.substr(2,4))
@@ -131,6 +135,7 @@ export default {
       }
       return this.currentMinutes
     },
+    //Given total minutes, return a time string
     formatTime: function(mins, ap){
       let minutes = '00';
       let hours = '00';
@@ -138,7 +143,7 @@ export default {
 
       if (mins < 60) {
         hours = '12'
-        minutes = mins
+        minutes = '' + mins
         ampm = 'AM'
       }
 
