@@ -23,9 +23,10 @@ npm run docker
 
 # push docker image to docker hub
 # replace enigmacurry with your login name
-docker login
-docker tag atc:latest enigmacurry/atc:latest
-docker push enigmacurry/atc:latest
+sudo docker login
+sudo docker tag atc:latest enigmacurry/atc:latest
+# export DOCKER_CONTENT_TRUST=1 # Uncomment to publicly sign this build
+sudo --preserve-env=DOCKER_CONTENT_TRUST docker push enigmacurry/atc:latest
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

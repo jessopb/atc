@@ -8,8 +8,8 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js",
-    "docker-build": "npm run build && docker build -t atc:latest .",
-    "docker": "docker run -d -p 8081:80 --name atc atc:latest && echo go to http://localhost:8081"
+    "docker-build": "npm run build && sudo docker build -t atc:latest .",
+    "docker": "sudo docker run -d -p 8081:80 --name atc atc:latest && echo go to http://localhost:8081"
   },
   "dependencies": {
     "backspace-disabler": "^1.1.3",
