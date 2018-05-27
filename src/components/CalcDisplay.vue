@@ -3,57 +3,42 @@
     <div class="headerBox">
       <h1>Amy's Timesheet Calculator</h1>
     </div>
-      <div class="displayBox">
-
-        <div class="displayrow">
-          <div class="displaycolumn">
-            <label>Start:</label>
-            <input class="displayout" type="text" v-model='this.$parent.startTime'>
-          </div>
-
-          <div class="displaycolumn">
-            <label>End:</label>
-            <input class="displayout" type="text" v-model='this.$parent.endTime'>
-          </div>
-          <div class="displaycolumn">
-            <label>Total:</label>
-            <input class="displayout" type="text" v-model='this.$parent.totalTime'>
-          </div>
+    <div class="displayBox">
+      <div class="displayrow">
+        <div class="displaycolumn">
+          <label>Start:</label>
+          <input class="displayout" type="text" v-model="this.$parent.startTime">
         </div>
-        <div class="displayrow">
-          <div class="displaycolumn">
-            <label>Entry:</label>
-            <input id="entry" type="text" v-model='this.$parent.inputString'>
-          </div>
-          <div class="displaycolumn">
-            <label>Time:</label>
-            <input class="displayout" type="text" v-model='this.$parent.outputString'>
-          </div>
+        <div class="displaycolumn">
+          <label>End:</label>
+          <input class="displayout" type="text" v-model="this.$parent.endTime">
+        </div>
+        <div class="displaycolumn">
+          <label>Total:</label>
+          <input class="displayout" type="text" v-model="this.$parent.totalTime">
         </div>
       </div>
+      <div class="displayrow">
+        <div class="displaycolumn">
+          <label>Entry:</label>
+          <input id="entry" type="text" v-model="this.$parent.inputString">
+        </div>
+        <div class="displaycolumn">
+          <label>Time:</label>
+          <input class="displayout" type="text" v-model="this.$parent.outputString">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-import { bus } from '../main'
+import { EventBus } from '../main'
 
 export default {
   name: 'CalcDisplay',
-
   methods: {
   },
-
-//unneccessary
-  created(){
-    bus.$on('calcKeyDown', (event) => {
-      console.log(event)
-    }),
-    bus.$on('calcButtonPressed', calcButton => {
-      console.log(calcButton)
-    })
-  }
-
 }
 </script>
 
@@ -85,9 +70,6 @@ h1, h2 {
   max-width: 480px;
   flex-wrap: wrap;
 }
-
-
-
 
 .displayBox {
   display: flex;

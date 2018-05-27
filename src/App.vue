@@ -8,11 +8,15 @@
 <script>
 import CalcButtons from './components/CalcButtons'
 import CalcDisplay from './components/CalcDisplay'
-import { bus } from './main'
+import { EventBus } from './main'
 
 export default {
   name: 'App',
   components: {
+
+
+
+
     CalcButtons,
     CalcDisplay
   },
@@ -26,6 +30,52 @@ export default {
       entered: false,
     }
   },
+  computed: {
+
+    outputString: function() {
+      if (this.inputString.match("(^[012][0-9][0-5][0-9][.]$)|(^[012][0-9][0-5][0-9]$)|(^[0-9][0-5][0-9][.]$)|(^[0-9][0-5][0-9]$)|(^[12][0-9][.]$)|(^[12][0-9]$)|(^[0-9][.]$)|(^[0-9]$)"))
+      {
+        return this.formatTime(this.parseMinutes(this.inputString), true)
+      }
+      else {
+        return ''
+      }
+    },
+    startTime: function() {
+      if (this.startMinutes)
+      {
+        return this.formatTime(this.startMinutes, true)
+      }
+      else
+      {
+        return ''
+      }
+    },
+    endTime: function() {
+      if (this.endMinutes)
+      {
+        return this.formatTime(this.endMinutes, true)
+      }
+      else
+      {
+        return ''
+      }
+    },
+    totalTime: function() {
+      if (this.totalMinutes != 0){
+        return this.formatTime(this.totalMinutes, false)
+      }
+      else {
+        return ''
+      }
+
+    }
+  },
+  created() {
+    EventBus.$on('calcKeyUp', event => {
+      this.handleInput(event.key)
+    })
+  },
   methods: {
     handleInput: function(what) {
       if (what == "Backspace")
@@ -37,24 +87,21 @@ export default {
         this.enter()
       }
       else {
-        this.textinput(what)
+        this.addCharToInputString(what)
       }
     },
-    textinput: function(what){
-      this.inputString = this.inputString + what
-      console.log(this.inputString)
+    addCharToInputString: function(inputCharacter){
+      this.inputString = this.inputString + inputCharacter
     },
     reset: function () {
       this.inputString = '';
       this.currentMinutes = 0;
       this.entered = false;
     },
-
     backspace: function () {
       if(this.inputString.length > 0)
         this.inputString = this.inputString.substr(0, this.inputString.length - 1)
     },
-
     enter: function () {
       if (this.entered == false) {
         this.endMinutes = 0
@@ -71,18 +118,14 @@ export default {
         }
         else {
           this.totalMinutes = this.endMinutes - this.startMinutes
-          console.log(this.totalMinutes)
         }
         this.reset()
-
       }
-
     },
     // Given custom notation, return minutes from 00:00.
     parseMinutes: function (input){
 
       if (input.length == 1){
-        console.log(60 * input)
         this.currentMinutes = 60 * input
       }
       if (input.length == 2){
@@ -117,7 +160,6 @@ export default {
         else {
           if (input.startsWith('12')){
             this.currentMinutes =  Number(input.substr(2,4))
-            console.log("curmin is " + this.currentMinutes)
           }
           else {
             this.currentMinutes =  Number(60 * input.substr(0,2)) + Number(input.substr(2,4))
@@ -136,7 +178,12 @@ export default {
       return this.currentMinutes
     },
     //Given total minutes, return a time string
-    formatTime: function(mins, ap){
+    /***
+    *
+    *
+    *
+    */
+    formatTime: function(mins){
       let minutes = '00';
       let hours = '00';
       let ampm = 'AM'
@@ -157,10 +204,9 @@ export default {
         ampm = 'PM'
       }
       else if (mins < 1440) {
-        hours = '' + Math.floor(mins/60)
+          hours = '' + Math.floor(mins/60)
         minutes = '' + mins%60
         ampm = 'PM'
-        console.log(hours + ' ' + minutes)
       }
       //clean up the formatting
       if (minutes.length == 1)
@@ -171,64 +217,37 @@ export default {
       {
         minutes = '00'
       }
-      if (!ap){
-        return hours + ':' + minutes
-      }
 
       return hours + ':' + minutes + ' ' + ampm
     },
+    formatAnswer: function(mins){
+      let minutes = '00';
+      let hours = '00';
+      hours = '' + Math.floor(mins/60)
+      minutes = '' + mins%60
 
-  },
-  computed: {
-
-    outputString: function() {
-      let len = this.inputString.length
-      if (this.inputString.match("(^[012][0-9][0-5][0-9][.]$)|(^[012][0-9][0-5][0-9]$)|(^[0-9][0-5][0-9][.]$)|(^[0-9][0-5][0-9]$)|(^[12][0-9][.]$)|(^[12][0-9]$)|(^[0-9][.]$)|(^[0-9]$)"))
+      //string format library to ensure '00'
+      if (minutes.length == 1)
       {
-
-        return this.formatTime(this.parseMinutes(this.inputString), true)
+        minutes = '0' + minutes
       }
-      else {
-        return ''
+      if (minutes.length == 0)
+      {
+        minutes = '00'
+      }
+      if (hours.length == 1)
+      {
+        hours = '0' + hours
+      }
+      if (hours.length == 0)
+      {
+        hours = '00'
       }
 
+      return hours + ':' + minutes
     },
-    startTime: function() {
-      if (this.startMinutes)
-      {
-        return this.formatTime(this.startMinutes, true)
-      }
-      else
-      {
-        return ''
-      }
-    },
-    endTime: function() {
-      if (this.endMinutes)
-      {
-        return this.formatTime(this.endMinutes, true)
-      }
-      else
-      {
-        return ''
-      }
-    },
-    totalTime: function() {
-      if (this.totalMinutes != 0){
-        return this.formatTime(this.totalMinutes, false)
-      }
-      else {
-        return ''
-      }
 
-    }
-  },
-  created() {
-    bus.$on('calcKeyUp', event => {
-      this.handleInput(event.key)
-    })
   }
-
 }
 </script>
 

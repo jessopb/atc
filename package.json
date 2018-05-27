@@ -16,7 +16,10 @@
     ]
   },
   "dependencies": {
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.11",
+    "@vue/cli-service": "^3.0.0-beta.11",
     "backspace-disabler": "^1.1.3",
+    "eslint-plugin-vue-libs": "^3.0.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -34,6 +37,11 @@
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-vue": "^4.5.0",
     "expect": "^22.4.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",

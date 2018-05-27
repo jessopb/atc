@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 
 import BackspaceDisabler from 'backspace-disabler'
 /* eslint-disable no-new */
-export const bus = new Vue({})
+export const EventBus = new Vue({})
 
 BackspaceDisabler.disable()
 
@@ -19,12 +19,12 @@ new Vue({
     [
       function() {
         window.addEventListener('keyup', (event) => {
-          bus.$emit('calcKeyUp', event);
+          EventBus.$emit('calcKeyUp', event);
         })
       },
       function() {
         window.addEventListener('keypress', (event) => {
-          bus.$emit('calcKeyDown', event);
+          EventBus.$emit('calcKeyDown', event);
           console.log(event)
         })
       },

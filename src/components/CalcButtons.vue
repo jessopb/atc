@@ -1,31 +1,88 @@
 <template>
-  <div class="calcbuttons" @keyup.55="inputString += '7'">
-      <div class="buttonBox">
-        <!-- conditional style on keypress... -->
-        <!-- v-bind:class="{red: true, blue: true}" -->
-        <div class="buttonCol">
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit7']}" v-on:click="buttonPressed(7)" type="button" name="button">7</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit4']}" v-on:click="buttonPressed(4)" type="button" name="button">4</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit1']}" v-on:click="buttonPressed(1)" type="button" name="button">1</button>
-          <button v-on:click="buttonPressed('reset')" type="button" name="button">C</button>
-        </div>
+  <div
+    class="calcbuttons"
+    @keyup.55="inputString += '7'">
+    <div class="buttonBox">
+      <!-- conditional style on keypress... -->
+      <!-- v-bind:class="{red: true, blue: true}" -->
+      <div class="buttonCol">
+        <button
+          :class="{buttonDown: buttonStates['Digit7']}"
+          type="button"
+          name="button"
+          @click="buttonPressed(7)">7</button>
+        <button
+          :class="{buttonDown: buttonStates['Digit4']}"
+          type="button"
+          name="button"
+          @click="buttonPressed(4)">4</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit1']}"
+          @click="buttonPressed(1)"
+          name="button">1</button>
+        <button
+          type="button"
+          @click="buttonPressed('reset')"
+          name="button">C</button>
+      </div>
 
-        <div class="buttonCol">
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit8']}" v-on:click="buttonPressed(8)"type="button" name="button">8</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit5']}" v-on:click="buttonPressed(5)"type="button" name="button">5</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit2']}" v-on:click="buttonPressed(2)"type="button" name="button">2</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit0']}" v-on:click="buttonPressed(0)"type="button" name="button">0</button>
-        </div>
-        <div class="buttonCol">
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit9']}" v-on:click="buttonPressed(9)"type="button" name="button">9</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit6']}" v-on:click="buttonPressed(6)"type="button" name="button">6</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Digit3']}" v-on:click="buttonPressed(3)"type="button" name="button">3</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['.']}" v-on:click="buttonPressed('.')" type="button" name="button">PM</button>
-        </div>
-        <div class="buttonCol">
-          <button v-bind:class="{buttonDown: this.buttonStates['Backspace']}" v-on:click="buttonPressed('Backspace')" type="button" name="button">Back</button>
-          <button v-bind:class="{buttonDown: this.buttonStates['Enter']}" v-on:click="buttonPressed('Enter')" type="button" name="button">Enter</button>
-        </div>
+      <div class="buttonCol">
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit8']}"
+          @click="buttonPressed(8)"
+          name="button">8</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit5']}"
+          @click="buttonPressed(5)"
+          name="button">5</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit2']}"
+          @click="buttonPressed(2)"
+          name="button">2</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit0']}"
+          @click="buttonPressed(0)"
+          name="button">0</button>
+      </div>
+      <div class="buttonCol">
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit9']}"
+          @click="buttonPressed(9)"
+          name="button">9</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit6']}"
+          @click="buttonPressed(6)"
+          name="button">6</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Digit3']}"
+          @click="buttonPressed(3)"
+          name="button">3</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['.']}"
+          @click="buttonPressed('.')"
+          name="button">PM</button>
+      </div>
+      <div class="buttonCol">
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Backspace']}"
+          @click="buttonPressed('Backspace')"
+          name="button">Back</button>
+        <button
+          type="button"
+          :class="{buttonDown: buttonStates['Enter']}"
+          @click="buttonPressed('Enter')"
+          name="button">Enter</button>
+      </div>
     </div>
 
   </div>
@@ -33,7 +90,7 @@
 
 <script>
 
-import { bus } from '../main'
+import { EventBus } from '../main'
 
 export default {
   name: 'CalcButtons',
@@ -55,34 +112,26 @@ export default {
         'Backspace' : false, //backspace
         '.': false, //190 or 110
       }
-
     }
+  },
+
+  // these listeners only for managing the
+  // button backgroundcolor input feedback
+  created() {
+    EventBus.$on('calcKeyUp', (event) => {
+      this.buttonStates[event.code] = false;
+    }),
+    EventBus.$on('calcKeyDown', (event) => {
+      this.buttonStates[event.code] = true;
+    })
   },
   methods: {
-
     buttonPressed: function(what) {
-
       this.$parent.handleInput(what)
-
     }
-  },
-  created() {
-    bus.$on('calcKeyUp', (event) => {
-
-      this.buttonStates[event.code] = false;
-
-
-    }),
-    bus.$on('calcKeyDown', (event) => {
-
-      this.buttonStates[event.code] = true;
-      //console.log(this.buttonStates[event.code])
-    })
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
 h1, h2 {
@@ -91,7 +140,6 @@ h1, h2 {
   padding: 10px;
 }
 
-
 * {
   padding: 0px;
   margin: 0px;
@@ -99,12 +147,10 @@ h1, h2 {
   font-family: Helvetica;
 }
 .calcbuttons {
-
   display: flex;
   padding: 0px;
   background-color: #ABC8E2;
   margin: auto;
-
   max-width: 480px;
   flex-wrap: wrap;
 }

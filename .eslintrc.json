@@ -1,0 +1,7 @@
+{
+    "extends":
+     [
+       "plugin:vue/recommended",
+       "eslint:recommended"
+     ]
+}
