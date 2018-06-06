@@ -13,10 +13,6 @@ import { EventBus } from './main'
 export default {
   name: 'App',
   components: {
-
-
-
-
     CalcButtons,
     CalcDisplay
   },
@@ -44,7 +40,7 @@ export default {
     startTime: function() {
       if (this.startMinutes)
       {
-        return this.formatTime(this.startMinutes, true)
+        return this.formatTime(this.startMinutes)
       }
       else
       {
@@ -54,7 +50,7 @@ export default {
     endTime: function() {
       if (this.endMinutes)
       {
-        return this.formatTime(this.endMinutes, true)
+        return this.formatTime(this.endMinutes)
       }
       else
       {
@@ -63,7 +59,7 @@ export default {
     },
     totalTime: function() {
       if (this.totalMinutes != 0){
-        return this.formatTime(this.totalMinutes, false)
+        return this.formatAnswer(this.totalMinutes)
       }
       else {
         return ''
@@ -77,6 +73,7 @@ export default {
     })
   },
   methods: {
+    //agregates keyboard/click-screen inputs
     handleInput: function(what) {
       if (what == "Backspace")
       {
@@ -90,18 +87,26 @@ export default {
         this.addCharToInputString(what)
       }
     },
+    //called by handleInput
     addCharToInputString: function(inputCharacter){
       this.inputString = this.inputString + inputCharacter
     },
+    //(to be) called by handleInput
     reset: function () {
       this.inputString = '';
       this.currentMinutes = 0;
       this.entered = false;
     },
+    //called by handleInput
     backspace: function () {
       if(this.inputString.length > 0)
         this.inputString = this.inputString.substr(0, this.inputString.length - 1)
     },
+    /***
+    * enter()
+    * called by handleInput()
+    *
+    */
     enter: function () {
       if (this.entered == false) {
         this.endMinutes = 0
@@ -122,9 +127,12 @@ export default {
         this.reset()
       }
     },
-    // Given custom notation, return minutes from 00:00.
-    parseMinutes: function (input){
+    /***
+    * Given custom notation, return minutes from 00:00.
+    * called by computed: outputString()
 
+    */
+    parseMinutes: function (input){
       if (input.length == 1){
         this.currentMinutes = 60 * input
       }
@@ -140,10 +148,9 @@ export default {
           else{
             this.currentMinutes =  60 * input
           }
-
         }
       }
-
+      /*BUG: 12. returning 1440 instead of 720 */
       if (input.length == 3){
         if (input.endsWith('.')){
           this.currentMinutes =  60 * input.substr(0,2) + 720
@@ -175,13 +182,25 @@ export default {
           this.currentMinutes =  Number(60 * input.substr(0,2)) + Number(input.substr(2,4)) + 720
         }
       }
+      console.log("current minutes is " + this.currentMinutes)
       return this.currentMinutes
     },
     //Given total minutes, return a time string
     /***
-    *
-    *
-    *
+    * formatTime(mins)
+    * formatTime(00) should return "12:00 AM"
+    * formatTime(25) should return "12:25 AM"
+    * formatTime(60) should return "01:00 AM"
+    * formatTime(65) should return "01:05 AM"
+    * formatTime(660) should return "11:00 AM"
+    * formatTime(665) should return "11:05 AM"
+    * formatTime(720) should return "12:00 PM"
+    * formatTime(725) should return "12:05 PM"
+    * formatTime(780) should return "01:00 PM"
+    * formatTime(785) should return "01:05 PM"
+    * formatTime(1380) should return "11:00 PM"
+    * formatTime(1385) should return "11:05 PM"
+    * upgrade: formatTime(mins, formatStrategy)
     */
     formatTime: function(mins){
       let minutes = '00';
@@ -217,9 +236,15 @@ export default {
       {
         minutes = '00'
       }
-
       return hours + ':' + minutes + ' ' + ampm
     },
+    /***
+    * formatAnswer(mins)
+    * should return '00:00'
+    * given 1*60, should return 01:00
+    * given 11*60, should return 11:00
+    * upgrade: formatAnswer(mins, formatStrategy)
+    */
     formatAnswer: function(mins){
       let minutes = '00';
       let hours = '00';
@@ -243,10 +268,8 @@ export default {
       {
         hours = '00'
       }
-
       return hours + ':' + minutes
     },
-
   }
 }
 </script>
