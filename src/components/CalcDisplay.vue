@@ -7,25 +7,40 @@
       <div class="displayrow">
         <div class="displaycolumn">
           <label>Start:</label>
-          <input class="displayout" type="text" v-model="this.$parent.startTime">
+          <input
+            class="displayout"
+            type="text"
+            v-model="this.$parent.startTime">
         </div>
         <div class="displaycolumn">
           <label>End:</label>
-          <input class="displayout" type="text" v-model="this.$parent.endTime">
+          <input
+            class="displayout"
+            type="text"
+            v-model="this.$parent.endTime">
         </div>
         <div class="displaycolumn">
           <label>Total:</label>
-          <input class="displayout" type="text" v-model="this.$parent.totalTime">
+          <input
+            class="displayout"
+            type="text"
+            v-model="this.$parent.totalTime">
         </div>
       </div>
       <div class="displayrow">
         <div class="displaycolumn">
           <label>Entry:</label>
-          <input id="entry" type="text" v-model="this.$parent.inputString">
+          <input
+            id="entry"
+            type="text"
+            v-model="this.$parent.inputString">
         </div>
         <div class="displaycolumn">
           <label>Time:</label>
-          <input class="displayout" type="text" v-model="this.$parent.outputString">
+          <input
+            class="displayout"
+            type="text"
+            v-model="this.$parent.outputString">
         </div>
       </div>
     </div>
@@ -91,7 +106,7 @@ h1, h2 {
   max-width: 480px;
   display: flex;
   font-size: 20px;
-  align-items: center;
+  
   justify-content: space-around;
   padding: 5px;
 }

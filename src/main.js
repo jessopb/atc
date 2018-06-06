@@ -14,7 +14,6 @@ BackspaceDisabler.disable()
 new Vue({
   el: '#app',
   components: { App },
-  template: '<App/>',
   mounted:
     [
       function() {
@@ -28,5 +27,6 @@ new Vue({
           console.log(event)
         })
       },
-    ]
+    ],
+  template: '<App/>'
 })
