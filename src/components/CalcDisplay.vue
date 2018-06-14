@@ -57,8 +57,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-
 <style scoped>
 h1, h2 {
   font-weight: bold;
@@ -106,7 +104,7 @@ h1, h2 {
   max-width: 480px;
   display: flex;
   font-size: 20px;
-  
+
   justify-content: space-around;
   padding: 5px;
 }

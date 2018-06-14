@@ -4,7 +4,6 @@
     @keyup.55="inputString += '7'">
     <div class="buttonBox">
       <!-- conditional style on keypress... -->
-      <!-- v-bind:class="{red: true, blue: true}" -->
       <div class="buttonCol">
         <button
           :class="{buttonDown: buttonStates['Digit7']}"
@@ -108,15 +107,16 @@ export default {
         'Digit8': false,
         'Digit9': false,
         'Enter' : false, //13 enter
-        'code27' :  false, //esc, clear
+        'code27' :  false, //esc, clear NOT IMPLEMENTED
         'Backspace' : false, //backspace
         '.': false, //190 or 110
       }
     }
   },
 
-  // these listeners only for managing the
-  // button backgroundcolor input feedback
+  /* these listeners only for managing the
+  *  button backgroundcolor input feedback
+  */
   created() {
     EventBus.$on('calcKeyUp', (event) => {
       this.buttonStates[event.code] = false;
