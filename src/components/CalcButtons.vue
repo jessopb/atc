@@ -1,89 +1,85 @@
 <template>
-  <div
-    class="calcbuttons"
-    @keyup.55="inputString += '7'">
+  <div class="calcbuttons">
     <div class="buttonBox">
       <!-- conditional style on keypress... -->
       <div class="buttonCol">
         <button
           :class="{buttonDown: buttonStates['Digit7']}"
           type="button"
-          name="button"
+          id="button7"
           @click="buttonPressed(7)">7</button>
         <button
           :class="{buttonDown: buttonStates['Digit4']}"
           type="button"
-          name="button"
+          id="button4"
           @click="buttonPressed(4)">4</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit1']}"
-          @click="buttonPressed(1)"
-          name="button">1</button>
+          id="button1"
+          @click="buttonPressed(1)">1</button>
         <button
           type="button"
           @click="buttonPressed('reset')"
-          name="button">C</button>
+          id="buttonReset">C</button>
       </div>
-
       <div class="buttonCol">
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit8']}"
           @click="buttonPressed(8)"
-          name="button">8</button>
+          id="button8">8</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit5']}"
           @click="buttonPressed(5)"
-          name="button">5</button>
+          id="button5">5</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit2']}"
           @click="buttonPressed(2)"
-          name="button">2</button>
+          id="button2">2</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit0']}"
           @click="buttonPressed(0)"
-          name="button">0</button>
+          id="button0">0</button>
       </div>
       <div class="buttonCol">
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit9']}"
           @click="buttonPressed(9)"
-          name="button">9</button>
+          id="button9">9</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit6']}"
           @click="buttonPressed(6)"
-          name="button">6</button>
+          id="button6">6</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Digit3']}"
           @click="buttonPressed(3)"
-          name="button">3</button>
+          id="button3">3</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['.']}"
           @click="buttonPressed('.')"
-          name="button">PM</button>
+          id="buttonPM">PM</button>
       </div>
       <div class="buttonCol">
         <button
           type="button"
           :class="{buttonDown: buttonStates['Backspace']}"
           @click="buttonPressed('Backspace')"
-          name="button">Back</button>
+          id="buttonBack">Back</button>
         <button
           type="button"
           :class="{buttonDown: buttonStates['Enter']}"
           @click="buttonPressed('Enter')"
-          name="button">Enter</button>
+          id="buttonEnter">Enter</button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -114,8 +110,8 @@ export default {
     }
   },
 
-  /* these listeners only for managing the
-  *  button backgroundcolor input feedback
+  /* Event listeners for managing the
+  *  button background color input feedback
   */
   created() {
     EventBus.$on('calcKeyUp', (event) => {
@@ -127,7 +123,7 @@ export default {
   },
   methods: {
     buttonPressed: function(what) {
-      this.$parent.handleInput(what)
+      EventBus.$emit('calcButtonClicked', what)
     }
   }
 }

@@ -71,6 +71,9 @@ export default {
     EventBus.$on('calcKeyUp', event => {
       this.handleInput(event.key)
     })
+    EventBus.$on('calcButtonClicked', event => {
+      this.handleInput(event)
+    })
   },
   methods: {
     //agregates keyboard/click-screen inputs
