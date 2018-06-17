@@ -7,4 +7,14 @@ describe('App.vue', () => {
       return true
     })
   })
+  describe('formatTime', () => {
+    it('does a thing', () => {
+      return true
+    })
+  })
+  describe('formatAnswer', () => {
+    it('does a thing', () => {
+      return true
+    })
+  })
 })
