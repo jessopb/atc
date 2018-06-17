@@ -63,8 +63,8 @@
           id="button3">3</button>
         <button
           type="button"
-          :class="{buttonDown: buttonStates['.']}"
-          @click="buttonPressed('.')"
+          :class="{buttonDown: buttonStates['PM']}"
+          @click="buttonPressed('PM')"
           id="buttonPM">PM</button>
       </div>
       <div class="buttonCol">
@@ -109,7 +109,6 @@ export default {
       }
     }
   },
-
   /* Event listeners for managing the
   *  button background color input feedback
   */

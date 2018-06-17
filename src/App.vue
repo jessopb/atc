@@ -86,6 +86,10 @@ export default {
       {
         this.enter()
       }
+      else if (what == "PM")
+      {
+        this.addCharToInputString('.')
+      }
       else {
         this.addCharToInputString(what)
       }
