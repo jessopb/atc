@@ -1,9 +1,16 @@
 import { shallowMount } from '@vue/test-utils'
 import CalcButtons from '../components/CalcButtons.vue'
 import sinon from 'sinon'
-
+/*
+TODO:
+change all:
+sinon.assert.calledWith(buttonSpy, n)
+to:
+expect(buttonSpy.args[0][0]).toEqual(n)
+for more readable test fail messages
+*/
 describe('CalcButtons.vue', () => {
-  
+
   it('has a buttonPM that calls buttonPressed(PM)', () => {
     const wrapper = shallowMount(CalcButtons)
     const buttonSpy = sinon.spy(wrapper.vm, 'buttonPressed')
@@ -14,7 +21,8 @@ describe('CalcButtons.vue', () => {
     const wrapper = shallowMount(CalcButtons)
     const buttonSpy = sinon.spy(wrapper.vm, 'buttonPressed')
     wrapper.find('#button0').trigger('click')
-    sinon.assert.calledWith(buttonSpy, 0)
+    expect(buttonSpy.args[0][0]).toEqual(0)
+    //sinon.assert.calledWith(buttonSpy, 0)
   })
   it('has a button1 that calls buttonPressed(1)', () => {
     const wrapper = shallowMount(CalcButtons)
