@@ -137,7 +137,9 @@ label {
   text-align: left;
 }
 .displayout {
-  width: 100%
+  width: 100%;
+  border-style: solid;
+  border-color: #183152;
 }
 
 #entry {
