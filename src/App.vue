@@ -157,10 +157,15 @@ export default {
           }
         }
       }
-      /*BUG: 12. returning 1440 instead of 720 */
       if (input.length == 3){
         if (input.endsWith('.')){
-          this.currentMinutes =  60 * input.substr(0,2) + 720
+          if (input.startsWith('12')){
+            this.currentMinutes =  60 * input.substr(0,2)
+          }
+          else{
+            this.currentMinutes =  60 * input.substr(0,2) + 720
+          }
+
         }
         else {
           this.currentMinutes =  Number(60 * input.substr(0,1)) + Number(input.substr(1,3))
@@ -229,8 +234,8 @@ export default {
         minutes = '' + mins%60
         ampm = 'PM'
       }
-      else if (mins < 1440) {
-          hours = '' + Math.floor(mins/60)
+      else if (mins <= 1440) {
+          hours = '' + Math.floor(mins/60) -12
         minutes = '' + mins%60
         ampm = 'PM'
       }
