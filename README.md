@@ -1,3 +1,5 @@
+[![GitHub release](https://img.shields.io/github/release/lbryio/lbry-desktop.svg)](https://GitHub.com/jessopb/atc/releases/)
+
 # Amy's Timesheet Calculator
 
 ## Build Setup
